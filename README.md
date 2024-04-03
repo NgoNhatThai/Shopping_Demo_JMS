@@ -1,4 +1,3 @@
-Mỗi bài tập được push lên 1 branch tương ứng.
 
 ## Mua sắm trực tuyến.
 
@@ -9,7 +8,7 @@ Dự án này là một hệ thống quản lý cho phép người dùng xem cá
 1. Lệnh clone dự án về máy:
 
     ```bash
-    git clone --branch lab7_shopping_springboot https://github.com/NgoNhatThai/WWW.git
+    git clone --branch main https://github.com/NgoNhatThai/Shopping_Demo_JMS
     ```
 
 2. Cài đặt các dependencies trong mục Build.gradle:
@@ -29,9 +28,9 @@ Dự án này là một hệ thống quản lý cho phép người dùng xem cá
     Cấu hình trong application.properties:
     ```bash
     spring.jpa.hibernate.ddl-auto=update
-    spring.datasource.url=jdbc:mariadb://localhost:3307/www_lab7_db
+    spring.datasource.url=jdbc:mariadb://localhost:3307/shopping
     spring.datasource.username=root
-    spring.datasource.password=sapassword
+    spring.datasource.password=rỏo
     spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
     spring.jpa.show-sql=true
     spring.jpa.open-in-view=true
@@ -45,8 +44,8 @@ Dự án này là một hệ thống quản lý cho phép người dùng xem cá
 4. Cấu hình cơ sở dữ liệu:
 
     - Tải MariaDB về máy và chỉnh port sử dụng thành 3307
-    - Tạo 1 user *root* với mật khẩu là "*sapassword*".
-    - Tạo 1 cơ sở dữ liệu tên là *www_lab7_db*
+    - Tạo 1 user *root* với mật khẩu là "*root*".
+    - Tạo 1 cơ sở dữ liệu tên là *shopping*
 
 5. Chạy ứng dụng: 
     Nếu bạn dùng IntelliJ (IDEA) thì khi mở project thì dự án sẽ được build tự động, hoặc nếu bạn dùng các IDEs khác thì có thể chuột phải vào project và chọn *Build project*.
