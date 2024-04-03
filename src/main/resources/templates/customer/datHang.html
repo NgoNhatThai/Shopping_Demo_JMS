@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy now</title>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id');
+        console.log("Id= "+productId);
+        function getData() {
+            return fetch(`/getOneProductById?id=${productId}`, {
+                method:"GET",
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+
+                .then(response => response.json())
+                .then(data => {
+                    populateTable(data);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+        function getPriceProduct() {
+            return fetch(`/getPriceProduct?id=${productId}`, {
+                method:"GET",
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+
+                .then(response => response.json())
+                .then(data => {
+                    setPrice(data);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+        function populateTable(data) {
+            //console.log("done here")
+            console.log(data)
+            //console.log(${data.product_id})
+            const id= document.getElementById("productId");
+            //id.innerHTML("");
+            id.value=data.product_id;
+            const name= document.getElementById("productName");
+            name.value=data.name;
+            const desc= document.getElementById("productDescription");
+            desc.value=data.description;
+            const unit= document.getElementById("productUnit");
+            unit.value=data.unit;
+        }
+        function setPrice(priceOfProduct){
+            console.log(priceOfProduct)
+            console.log("here")
+            const price= document.getElementById("productPrice");
+            price.value= priceOfProduct.toString();
+            const total= document.getElementById("thanhTien")
+            total.value = priceOfProduct.toString();
+            console.log(price.value)
+        }
+        getData();
+        getPriceProduct();
+        function changeTotal(){
+            const price= document.getElementById("productPrice").value
+            const quantity = document.getElementById("quantity").value
+            const total= document.getElementById("thanhTien")
+            total.value= (price*quantity)
+        }
+        function createOrder() {
+            const id = document.getElementById("productId").value;
+            const quantity = document.getElementById("quantity").value;
+            const total = document.getElementById("thanhTien").value;
+            fetch(`/createOrder?price=${total}&quantity=${quantity}&id=${id}`, {
+                method:"POST",
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+                .then(
+                    alert("Đã tạo hóa đơn !")
+                )
+        }
+    </script>
+    <style>
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        #quantityOutput {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Thông Tin Sản Phẩm</h2>
+
+<label for="productId">ID:</label>
+<input type="text" id="productId" value="" readonly>
+
+<label for="productName">Tên Sản Phẩm:</label>
+<input type="text" id="productName" value="Sản Phẩm ABC" readonly>
+
+<label for="productDescription">Mô Tả:</label>
+<textarea id="productDescription" rows="4" readonly>Sản phẩm mô tả chi tiết.</textarea>
+
+<label for="productUnit">Đơn Vị:</label>
+<input type="text" id="productUnit" value="Cái" readonly>
+
+<label for="productStatus">Trạng Thái:</label>
+<input type="text" id="productStatus" value="Còn Hàng" readonly>
+
+<label for="productPrice">Đơn giá:</label>
+<input type="text" id="productPrice" value="" readonly>
+
+<h2>Chọn Số Lượng Đặt Hàng</h2>
+
+<input type="range" id="quantity" min="1" max="10" value="1" onclick="changeTotal()">
+<output for="quantity" id="quantityOutput">1</output>
+<h2>Thành tiền: </h2>
+<label for="productStatus">Tổng tiền: </label>
+<input type="text" id="thanhTien" value="" readonly>
+
+<button onclick="createOrder()">Đặt Hàng</button>
+
+</body>
+</html>

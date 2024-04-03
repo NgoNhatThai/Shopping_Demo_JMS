@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Xem danh sach san pham</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function getData() {
+                return fetch('/products')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Call a function to populate the table with the fetched data
+                        populateTable(data);
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            }
+
+            function populateTable(data) {
+                const tableBody = document.getElementById("tableBody");
+
+                // Clear existing rows
+                tableBody.innerHTML = "";
+
+                // Loop through the data and create a new row for each item
+                data.forEach(item => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${item.product_id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.unit}</td>
+                        <td>${item.description}</td>
+                        <td>${item.status}</td>
+                        <td><a href="/datHang?id=${item.product_id}">Buy now</a></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Call the getData function
+            getData();
+        });
+    </script>
+</head>
+<body>
+    <table border="2">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Unit</td>
+                <td>Description</td>
+                <td>Status</td>
+                <td>Get</td>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+</body>
+</html>
